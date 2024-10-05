@@ -5,20 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b3e0cd60-4597-4aa6-9cc7-66439de96a53" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/Game/Game.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Game/Items/Stackable.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Game/Characters/Character.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Game/Characters/Character.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Game/Characters/NPC.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Game/Characters/NPC.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Game/Characters/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Game/Characters/Player.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Game/Inventory/Inventory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Game/Inventory/Inventory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Game/Items/Armor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Game/Items/Armor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Game/Items/Barterable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Game/Items/Barterable.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Game/Items/Consumable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Game/Items/Consumable.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Game/Items/GoldCoin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Game/Items/GoldCoin.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Game/Items/Item.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Game/Items/Item.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Game/Items/Weapon.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Game/Items/Weapon.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -64,6 +56,20 @@
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\jonas\Desktop\OOAD\OOAD-Individuell\src" />
     </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Main" />
+      <module name="OOAD-Individuell" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.Main" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>

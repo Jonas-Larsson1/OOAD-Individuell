@@ -43,6 +43,19 @@ public class Inventory {
     }
   }
 
+  public void removeItem(Item item) {
+    if (!(item instanceof Stackable)) {
+      items.remove(item);
+      return;
+    }
+    for (Item inventoryItem : items) {
+      if (inventoryItem.getName().equals(item.getName())) {
+        ((Stackable) inventoryItem).changeQuantity(-1);
+        return;
+      }
+    }
+  }
+
   public void removeItem(Item item, int amount) {
     if (!(item instanceof Stackable)) {
       items.remove(item);

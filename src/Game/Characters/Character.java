@@ -31,4 +31,11 @@ abstract class Character {
     return barterableItems;
   }
 
+  protected int getCharisma() {
+    return charisma;
+  }
+
+  protected String getName() {
+    return name;
+  }
 }

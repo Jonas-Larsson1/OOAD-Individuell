@@ -3,6 +3,10 @@ package Game.Items;
 public class GoldCoin extends Item implements Stackable {
   private int quantity;
 
+  public GoldCoin() {
+    super("Gold coin", 0.01, 1);
+    this.quantity = 1;
+  }
   public GoldCoin(int quantity) {
     super("Gold coin", 0.01, 1);
     this.quantity = quantity;
