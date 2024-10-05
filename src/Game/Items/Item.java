@@ -1,6 +1,6 @@
 package Game.Items;
 
-abstract class Item {
+public abstract class Item {
   protected String name;
   protected double weight;
   protected double value;

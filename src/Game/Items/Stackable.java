@@ -1,2 +1,6 @@
-package Game.Items;public interface Stackable {
+package Game.Items;
+
+public interface Stackable {
+  void changeQuantity(int amount);
+  int getQuantity();
 }
