@@ -10,7 +10,7 @@ public class Game {
 
   private void setupGame() {
     player = new Player("Charles", 30);
-    npc = new NPC("Dingus", 10);
+    npc = new NPC("Dingus", 10, 2);
 
     player.getInventory().addItem(new Weapon("Big Sword", 10, 15, 25));
     player.getInventory().addItem(new Armor("Small Shield", 5, 10, 5));

@@ -8,9 +8,15 @@ import java.util.Random;
 import java.util.ArrayList;
 
 public class NPC extends Character {
+  private int patience;
 
-  public NPC(String name, int charisma) {
+  public NPC(String name, int charisma, int patience) {
     super(name, charisma);
+    this.patience = patience;
+  }
+
+  public int getPatience() {
+    return patience;
   }
 
   public void requestRandomItem(Player player) {
@@ -21,28 +27,35 @@ public class NPC extends Character {
 
     Item randomItem = playerItems.get(index);
 
-    System.out.println("NPC requests: " + randomItem.getDescription());
+    System.out.println("NPC requests: " + randomItem.getName());
 
     negotiateTrade(player, randomItem);
   }
 
-  public void negotiateTrade(Player player, Item requestedItem) {
+  private void negotiateTrade(Player player, Item requestedItem) {
     double minPrice = ((Barterable) requestedItem).minSellPriceAfterNegotiation(player.getCharisma());
+    int attempts = 0;
+    while (attempts < patience) {
+      double offer = player.getOfferForItem(requestedItem);
 
-    double offer = player.getOfferForItem(requestedItem);
+      if (offer >= minPrice) {
+        System.out.println("Trade successful! " + player.getName() + " acquires " + requestedItem.getName());
+        completeTrade(player, requestedItem, offer);
+        return;
+      } else {
+        attempts++;
+        System.out.printf("%s rejects the offer. %s's offer was too low.%n", name, player.getName());
+      }
 
-    System.out.println(name + " is willing to sell for: " + minPrice);
-    System.out.println(player.getName() + " offers: " + offer);
-
-    if (offer >= minPrice) {
-      System.out.println("Trade successful! " + player.getName() + " acquires " + requestedItem.getName());
-      completeTrade(player, requestedItem, offer);
-    } else {
-      System.out.println(name + " rejects the trade. " + player.getName() + "'s offer was too low.");
+      if (attempts < patience) {
+        System.out.printf("You have %d more attempts to negotiate.%n", (patience - attempts));
+      } else {
+        System.out.printf("%s has lost patience. Trade failed.%n", name);
+      }
     }
   }
 
-  public void completeTrade(Player player, Item requestedItem, double offer) {
+  private void completeTrade(Player player, Item requestedItem, double offer) {
 
     player.getInventory().removeItem(new GoldCoin((int) offer));
     inventory.addItem(new GoldCoin((int) offer));
