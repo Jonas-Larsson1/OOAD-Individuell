@@ -1,6 +1,6 @@
 package Game.Characters;
 
-import Game.Items.Item;
+import Game.Trading.Trade;
 
 import java.util.Scanner;
 
@@ -9,14 +9,26 @@ public class Player extends Character {
     super(name, charisma);
   }
 
-  public double getOfferForItem(Item requestedItem) {
+  public double getResponderOffer(Trade trade) {
     Scanner scanner = new Scanner(System.in);
-    System.out.println("You are negotiating for: " + requestedItem.getDescription());
-    System.out.println("How much gold are you willing to offer?");
+    double newOffer;
 
-    double offer = Double.parseDouble(scanner.nextLine());
-    System.out.printf("%s has offered %.2f gold.\n", name, offer);
+    System.out.print("Do you accept the offer? (y/n): ");
+    String response = scanner.nextLine().toUpperCase();
+    if (response.equals("Y")) {
+      newOffer = trade.getCurrentOffer();
+    } else {
+      System.out.print("Enter counter-offer: ");
+      newOffer = Double.parseDouble(scanner.nextLine());
+    }
 
-    return offer;
+    return newOffer;
+  }
+
+  public double getInitiatorOffer(Trade trade) {
+    Scanner scanner = new Scanner(System.in);
+    System.out.println("How much gold do you want to buy it for?");
+
+    return Double.parseDouble(scanner.nextLine());
   }
 }

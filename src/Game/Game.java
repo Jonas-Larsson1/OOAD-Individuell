@@ -9,8 +9,8 @@ public class Game {
   private NPC npc;
 
   private void setupGame() {
-    player = new Player("Charles", 30);
-    npc = new NPC("Dingus", 10, 2);
+    player = new Player("Charles", 50);
+    npc = new NPC("Dingus", 0, 2);
 
     player.getInventory().addItem(new Weapon("Big Sword", 10, 15, 25));
     player.getInventory().addItem(new Armor("Small Shield", 5, 10, 5));
@@ -23,6 +23,6 @@ public class Game {
 
   public void start() {
     setupGame();
-    npc.requestRandomItem(player);
+    npc.requestRandomPlayerItem(player);
   }
 }
