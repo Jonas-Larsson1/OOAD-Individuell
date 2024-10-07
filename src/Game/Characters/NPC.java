@@ -32,7 +32,12 @@ public class NPC extends Character {
     trade.negotiateTrade();
   }
 
-  public double getResponderOffer(Trade trade) {
+  public double makeCounterOffer(Trade trade) {
+    try {
+      Thread.sleep(2000);
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    }
 //    Scanner scanner = new Scanner(System.in);
 //    System.out.println("You are selling: " + requestedItem.getName());
 //    System.out.println("How much gold do you want to sell it for?");
@@ -41,9 +46,24 @@ public class NPC extends Character {
     return 0.0;
   }
 
-  public double getInitiatorOffer(Trade trade) {
+  public boolean respondToCounterOffer(Trade trade) {
+    try {
+      Thread.sleep(2000);
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    }
+    return trade.getCurrentResponderOffer() <= trade.getMaxPrice();
+  }
+
+  public double makeOffer(Trade trade) {
+    try {
+      Thread.sleep(2000);
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    }
+
     double offerModifier;
-    double currentOffer = trade.getCurrentOffer();
+    double currentOffer = trade.getCurrentInitiatorOffer();
     double itemValue = trade.getRequestedItem().getValue();
     double newOffer;
 

@@ -9,14 +9,14 @@ public class Player extends Character {
     super(name, charisma);
   }
 
-  public double getResponderOffer(Trade trade) {
+  public double makeCounterOffer(Trade trade) {
     Scanner scanner = new Scanner(System.in);
     double newOffer;
 
     System.out.print("Do you accept the offer? (y/n): ");
     String response = scanner.nextLine().toUpperCase();
     if (response.equals("Y")) {
-      newOffer = trade.getCurrentOffer();
+      newOffer = trade.getCurrentInitiatorOffer();
     } else {
       System.out.print("Enter counter-offer: ");
       newOffer = Double.parseDouble(scanner.nextLine());
@@ -25,7 +25,12 @@ public class Player extends Character {
     return newOffer;
   }
 
-  public double getInitiatorOffer(Trade trade) {
+  @Override
+  public boolean respondToCounterOffer(Trade trade) {
+    return false;
+  }
+
+  public double makeOffer(Trade trade) {
     Scanner scanner = new Scanner(System.in);
     System.out.println("How much gold do you want to buy it for?");
 

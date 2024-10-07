@@ -40,6 +40,7 @@ public abstract class Character {
     return name;
   }
 
-  public abstract double getInitiatorOffer(Trade trade);
-  public abstract double getResponderOffer(Trade trade);
+  public abstract double makeOffer(Trade trade);
+  public abstract double makeCounterOffer(Trade trade);
+  public abstract boolean respondToCounterOffer(Trade trade);
 }

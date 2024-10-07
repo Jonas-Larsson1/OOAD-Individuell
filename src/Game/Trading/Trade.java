@@ -2,23 +2,26 @@ package Game.Trading;
 
 import Game.Characters.Character;
 import Game.Characters.NPC;
-import Game.Characters.Player;
 import Game.Items.Barterable;
 import Game.Items.GoldCoin;
 import Game.Items.Item;
 
 public class Trade {
   private static final String RESET = "\u001B[0m";
-  private static final String GREEN = "\u001B[32m";
-  private static final String RED = "\u001B[31m";
-  private static final String YELLOW = "\u001B[33m";
+  private static final String HEADER = "\u001B[30m";
+  private static final String ITEM = "\u001B[1m";
+  private static final String SUCCESS = "\u001B[32m";
+  private static final String FAIL = "\u001B[31m";
+  private static final String INITIATOR = "\u001B[33m";
+  private static final String RESPONDER = "\u001B[35m";
 
   protected Character initiator;
   protected Character responder;
   protected Item requestedItem;
   protected double maxPrice;
   protected double minPrice;
-  protected double currentOffer = -0.0;
+  protected double currentInitiatorOffer = -0.0;
+  protected double currentResponderOffer = -0.0;
 
   public Trade(Character initiator, Character responder, Item requestedItem) {
     this.initiator = initiator;
@@ -30,72 +33,74 @@ public class Trade {
 
   public void negotiateTrade() {
 
-    System.out.printf("%s wants to trade with %s for: %s\n",
-        initiator.getName(), responder.getName(), requestedItem.getDescription());
+    System.out.printf("%s=========================================%s\n", HEADER, RESET);
+    System.out.printf("%sTrade Proposal: %s wants to trade with %s for: %s\n",
+        INITIATOR, initiator.getName(), responder.getName(),  RESET);
+    System.out.printf("%s%s%S\n",ITEM, requestedItem.getDescription(), RESET);
+    System.out.printf("%s=========================================%s\n", HEADER, RESET);
 
     int attempts = 0;
+    boolean tradeSuccessful = false;
     int patience = initiator instanceof NPC ? ((NPC) initiator).getPatience() : ((NPC) responder).getPatience();
 
     while (attempts < patience) {
-      double initiatorOffer = initiator.getInitiatorOffer(this);
-      currentOffer = initiatorOffer;
-      System.out.printf("%s has offered %.2f gold.\n",
-          initiator.getName(), initiatorOffer);
+      System.out.printf("%s%s is making an offer...%s\n",
+          INITIATOR, initiator.getName(), RESET);
 
-      double responderOffer = responder.getResponderOffer(this);
+      currentInitiatorOffer = initiator.makeOffer(this);
 
-      if (responderOffer == currentOffer) {
-        System.out.printf("%s accepts %s's offer of %.2f gold.\n",
-            responder.getName(), initiator.getName(), currentOffer);
+      System.out.printf("%s%s offers: %.2f gold.%s\n",
+          INITIATOR, initiator.getName(), currentInitiatorOffer, RESET);
+
+      System.out.printf("%s%s is thinking...%s\n",
+          RESPONDER, responder.getName(), RESET);
+
+      currentResponderOffer = responder.makeCounterOffer(this);
+
+      System.out.printf("%s=========================================%s\n", HEADER, RESET);
+
+      if (currentResponderOffer == currentInitiatorOffer) {
+        System.out.printf("%s✔️ %s accepts %s's offer of %.2f gold.%s.\n",
+            RESPONDER, responder.getName(), initiator.getName(), currentInitiatorOffer, RESET);
+        tradeSuccessful = true;
+        break;
       } else {
-        System.out.printf("%s has suggested %.2f gold.\n",
-            responder.getName(), responderOffer);
+        System.out.printf("%s%s suggests: %.2f gold.%s\n",
+            RESPONDER, responder.getName(), currentResponderOffer, RESET);
       }
 
-      if (responderOffer <= maxPrice) {
-        System.out.printf("%sTrade successful! %s acquires %s%s%n",
-            GREEN, initiator.getName(), requestedItem.getName(), RESET);
-        currentOffer = (responderOffer);
-        completeTrade();
-        return;
+      System.out.printf("%s%s considers the counter offer...%s\n",
+          INITIATOR, initiator.getName(), RESET);
+
+      tradeSuccessful = initiator.respondToCounterOffer(this);
+
+      if (tradeSuccessful) {
+        break;
       } else {
         attempts++;
       }
 
       if (attempts < patience) {
-        System.out.printf("%s rejects the offer. You have %d more attempt(s) to negotiate.\n",
-            initiator instanceof NPC ? initiator.getName() : responder.getName(),  (patience - attempts));
+        System.out.printf("%s%s rejects the offer. You have %d more attempt(s) to negotiate.%s\n",
+            FAIL, initiator instanceof NPC ? initiator.getName() : responder.getName(),  (patience - attempts), RESET);
       } else {
-        System.out.printf("%s has lost patience. Trade failed.\n",
-            initiator instanceof NPC ? initiator.getName() : responder.getName());
+        System.out.printf("%s%s has lost patience. Trade failed.%s\n",
+            FAIL, initiator instanceof NPC ? initiator.getName() : responder.getName(), RESET);
       }
     }
 
-
-//    while (attempts < patience) {
-//      double offer = player.getOfferForItem(requestedItem);
-//
-//      if (offer <= maxPrice) {
-//        System.out.println("Trade successful! " + name + " acquires " + requestedItem.getName());
-//        completeTrade(player, requestedItem, offer);
-//        return;
-//      } else {
-//        attempts++;
-//        System.out.printf("%s rejects the offer. %s's requested price was too high.%n", name, player.getName());
-//      }
-//
-//      if (attempts < patience) {
-//        System.out.printf("You have %d more attempts to negotiate.%n", (patience - attempts));
-//      } else {
-//        System.out.printf("%s has lost patience. Trade failed.%n", name);
-//      }
-//    }
+    if (tradeSuccessful) {
+      System.out.printf("%sTrade successful! %s acquires: %s",
+          SUCCESS, initiator.getName(), RESET);
+      System.out.printf("%s%s%s\n", ITEM, requestedItem.getName(), RESET);
+      completeTrade();
+    }
   }
 
   private void completeTrade() {
 
-    initiator.getInventory().removeItem(new GoldCoin((int) currentOffer));
-    responder.getInventory().addItem(new GoldCoin((int) currentOffer));
+    initiator.getInventory().removeItem(new GoldCoin((int) currentInitiatorOffer));
+    responder.getInventory().addItem(new GoldCoin((int) currentInitiatorOffer));
 
     responder.getInventory().removeItem(requestedItem);
     initiator.getInventory().addItem(requestedItem);
@@ -105,11 +110,15 @@ public class Trade {
     return maxPrice;
   }
 
-  public double getCurrentOffer() {
-    return currentOffer;
+  public double getCurrentInitiatorOffer() {
+    return currentInitiatorOffer;
   }
 
   public Item getRequestedItem() {
     return requestedItem;
+  }
+
+  public double getCurrentResponderOffer() {
+    return currentResponderOffer;
   }
 }
