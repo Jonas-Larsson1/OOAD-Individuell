@@ -20,8 +20,8 @@ public class Trade {
   protected Item requestedItem;
   protected double maxPrice;
   protected double minPrice;
-  protected double currentInitiatorOffer = -0.0;
-  protected double currentResponderOffer = -0.0;
+  protected double currentInitiatorOffer = 0.0;
+  protected double currentResponderOffer = 0.0;
 
   public Trade(Character initiator, Character responder, Item requestedItem) {
     this.initiator = initiator;
@@ -116,6 +116,10 @@ public class Trade {
 
   public double getMaxPrice() {
     return maxPrice;
+  }
+
+  public double getMinPrice() {
+    return minPrice;
   }
 
   public double getCurrentInitiatorOffer() {

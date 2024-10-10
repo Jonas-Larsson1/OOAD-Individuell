@@ -38,12 +38,28 @@ public class NPC extends Character {
     } catch (InterruptedException e) {
       e.printStackTrace();
     }
-//    Scanner scanner = new Scanner(System.in);
-//    System.out.println("You are selling: " + requestedItem.getName());
-//    System.out.println("How much gold do you want to sell it for?");
-//
-//    return Double.parseDouble(scanner.nextLine());
-    return 0.0;
+
+    double offerModifier;
+    double currentResponderOffer = trade.getCurrentResponderOffer();
+    double currentInitiatorOffer = trade.getCurrentInitiatorOffer();
+    double itemValue = trade.getRequestedItem().getValue();
+    double minPrice = trade.getMinPrice();
+    double newOffer;
+
+    if (currentResponderOffer == 0.0) {
+//      100 charisma erbjuder 150% av item value, 0 charisma erbjuder 100% av item value.
+      offerModifier = ((100 - ((double) charisma / 2)) / 100.0) + 1;
+      newOffer = itemValue * offerModifier;
+    } else if (currentInitiatorOffer >= minPrice) {
+      newOffer = currentInitiatorOffer;
+    } else {
+      double halfwayOffer = (itemValue - trade.getMinPrice()) / 2;
+//      100 charisma erbjuder erbjuder halvvägs mellan item value och minpris, 0 charisma erbjuder item value.
+      offerModifier = ((100 - charisma) / 100.0) + 1;
+      newOffer = itemValue - (halfwayOffer * offerModifier);
+    }
+
+    return newOffer;
   }
 
   public boolean respondToCounterOffer(Trade trade) {

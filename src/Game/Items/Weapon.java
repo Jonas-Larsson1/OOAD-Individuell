@@ -14,7 +14,7 @@ public class Weapon extends Item implements Barterable {
 
   @Override
   public double minSellPriceAfterNegotiation(int charisma) {
-    double discount = (100.0 - charisma) / 100.0;
+    double discount = (100.0 - (double) charisma / 2) / 100.0;
     return value * discount;
   }
 

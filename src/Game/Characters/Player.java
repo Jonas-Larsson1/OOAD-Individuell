@@ -27,12 +27,15 @@ public class Player extends Character {
 
   @Override
   public boolean respondToCounterOffer(Trade trade) {
-    return false;
+    Scanner scanner = new Scanner(System.in);
+    System.out.print("Do you accept the counter offer? (y/n): ");
+    String response = scanner.nextLine().toUpperCase();
+    return response.equals("Y");
   }
 
   public double makeOffer(Trade trade) {
     Scanner scanner = new Scanner(System.in);
-    System.out.println("How much gold do you want to buy it for?");
+    System.out.println("How much gold do you want offer for it?");
 
     return Double.parseDouble(scanner.nextLine());
   }
