@@ -27,8 +27,13 @@ public class Trade {
     this.initiator = initiator;
     this.responder = responder;
     this.requestedItem = requestedItem;
-    this.maxPrice = ((Barterable) requestedItem).maxBuyPriceAfterNegotiation(responder.getCharisma());
-    this.minPrice = ((Barterable) requestedItem).minSellPriceAfterNegotiation(responder.getCharisma());
+    if (requestedItem instanceof Barterable) {
+      this.maxPrice = ((Barterable) requestedItem).maxBuyPriceAfterNegotiation(responder.getCharisma());
+      this.minPrice = ((Barterable) requestedItem).minSellPriceAfterNegotiation(responder.getCharisma());
+    } else {
+      this.maxPrice = requestedItem.getValue();
+      this.minPrice = requestedItem.getValue();
+    }
   }
 
   public void negotiateTrade() {
@@ -41,7 +46,10 @@ public class Trade {
 
     int attempts = 0;
     boolean tradeSuccessful = false;
-    int patience = initiator instanceof NPC ? ((NPC) initiator).getPatience() : ((NPC) responder).getPatience();
+    int patience =
+        initiator instanceof NPC ? ((NPC) initiator).getPatience() :
+        responder instanceof NPC ? ((NPC) responder).getPatience() :
+        99;
 
     while (attempts < patience) {
       System.out.printf("%s%s is making an offer...%s\n",

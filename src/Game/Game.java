@@ -9,8 +9,8 @@ public class Game {
   private NPC npc;
 
   private void setupGame() {
-    player = new Player("Charles", 50);
-    npc = new NPC("Dingus", 0, 2);
+    player = new Player("Jonas", 50);
+    npc = new NPC("Dingus", 50, 2);
 
     player.getInventory().addItem(new Weapon("Big Sword", 10, 15, 25));
     player.getInventory().addItem(new Armor("Small Shield", 5, 10, 5));
