@@ -26,7 +26,7 @@ public class Game {
   public void start() {
     setupGame();
 //    npc påbörjar trade med spelaren
-//    npc.requestRandomPlayerItem(player);
+    npc.requestRandomPlayerItem(player);
 
 //    spelaren påbörjar trade med npc
     Weapon npcItem = new Weapon("Shiny Dagger", 4, 10, 20);
